@@ -56,14 +56,13 @@ public class StudentController {
                 .body(studentService.save(student));
     }
 //PREGUNTA01-------------------------------------------------------------------------------------------------------
-// SE MODIFICO EL MODELO STUDENT PARA QUE PUDIERA RECIBIR LOS PARAMETROS CORRECTAMENTE
+// SE MODIFICO EL STUDENT SERVICE PARA QUE RECIBIRERA LOS PARAMETROS CORRECTOS
     @PutMapping("/{uid}")
     public ResponseEntity<Student> updateStudent(@PathVariable("uid") String uid, @RequestBody Student student) {
-        student.Setuid(uid);
-        Student updatedStudent = studentService.update(student);
         return ResponseEntity
                 .status(HttpStatus.ACCEPTED)
-                .body(studentService.update(student));
+                .body(studentService.update(uid, student));
+       
     }
 
     @DeleteMapping("/{uid}")
