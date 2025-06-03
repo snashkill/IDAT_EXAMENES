@@ -29,9 +29,24 @@ public class StudentController {
         return studentService.findAll();
     }
 
+
+//PREGUNTA02------------------------------------------------------------------------------
+// MODIFICADO A UN RESPONSE ENTITY
     @GetMapping("/{uid}")
-    public Student getStudentById(@PathVariable("uid") String uid) {
-        return studentService.findById(uid);
+    public ResponseEntity<Student> getStudentById(@PathVariable("uid") String uid) {
+        Student student = studentService.findById(uid);
+
+        if (student != null) {
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(student);
+        } else {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .build();
+        }
+
+
     }
 
     @PostMapping
@@ -40,9 +55,12 @@ public class StudentController {
                 .status(HttpStatus.ACCEPTED)
                 .body(studentService.save(student));
     }
-
+//PREGUNTA01-------------------------------------------------------------------------------------------------------
+// SE MODIFICO EL MODELO STUDENT PARA QUE PUDIERA RECIBIR LOS PARAMETROS CORRECTAMENTE
     @PutMapping("/{uid}")
     public ResponseEntity<Student> updateStudent(@PathVariable("uid") String uid, @RequestBody Student student) {
+        student.Setuid(uid);
+        Student updatedStudent = studentService.update(student);
         return ResponseEntity
                 .status(HttpStatus.ACCEPTED)
                 .body(studentService.update(student));
@@ -57,3 +75,4 @@ public class StudentController {
     }
 
 }
+
